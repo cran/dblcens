@@ -3,9 +3,13 @@
 \title{Compute NPMLE of CDF from doubly censored data, with a constraint}
 \description{
     \code{d011ch} computes the NPMLE of CDF, with and without a 
-         constraint, from doubly censored data.
-         It uses EM algorithm starting from an initial CDF estimator that
-         have jumps at uncensored points as well as the mid point of those
+         constraint, from doubly censored data. 
+         It also computes the -2 log empirical likelihood ratio 
+         for testing the constraint via empirical likelihood theorem, i.e.
+         under Ho it should be distributed as chi-square with df=1.
+
+        It uses EM algorithm starting from an initial CDF estimator that
+        have jumps at uncensored points as well as the mid point of those
  censoring times that have pattern of (0,2), (see below for definition 
  and example.)
 
@@ -16,10 +20,6 @@ When there are ties, the left (right)
  a proper distribution as estimator. (though this can be modified
  easily as they are written in R language).
 
-It also computes the -2 log likelihood ratio based on the empirical
-likelihood 
-for testing the constraint via empirical likelihood theorem, i.e.
-under Ho it should be distributed as chi-square with df=1.
 }
 \usage{
  d011ch(z, d, K, konst, identical=rep(0,length(z), maxiter=49, error=0.00001)
@@ -87,8 +87,7 @@ Lifetime Data Analysis (2003). {\bf 9}
 \examples{
 d011ch(z=c(1,2,3,4,5), d=c(1,0,2,2,1), K=3.5, konst=0.6)
 #
-#  Here we are testing Ho: F(3.5) = 0.6 with a two-sided alternative
-#
+# Here we are testing Ho: F(3.5) = 0.6 with a two-sided alternative
 # you should get something like
 #
 #       $time:

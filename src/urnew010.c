@@ -3,9 +3,8 @@
   Programmer   : Li Lee and Mai Zhou (mai@ms.uky.edu) Gnu type copyright.
   Description  : On HP700 computers, compile by cc -c -O urnew010.c  
                  and then inside Splus use 
-                 > dyn.load2("urnew010.o") to load it. Producing a smaller 
-                 code under HP-UX 9.01 than 9.05 (strange?))
-                 Also, gcc seems to work OK under HP but not SPARC.
+                 > dyn.load2("urnew010.o") to load it. 
+                 Ported to R, change long to int to work on AMD64. 2/2005
   Date 1st ver. : June 9, 1993
   Last revision : June 12, 1995. 1999. 2002. called by R function d011()
   Depend on     : wur.c  and  ma.c
@@ -16,8 +15,8 @@
 #include <stdlib.h>
 
 void urnew010(z, d, dup, sur, jum, max, err, r, s, rs, zext, dext, wext)
-long *max, *r, *s, *rs;
-long d[], dext[];
+int *max, *r, *s, *rs;
+int d[], dext[];
 double *err;
 double z[], sur[], jum[], zext[], wext[];
 char *dup[];        /* I used char *dup and char dup[], they do not work! */ 
@@ -31,18 +30,18 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
    rs is length of d[d=2] 
    zext, dext, wext are for output extended data, they have length s+rs  */
 
-{    long i, j, h, mm, nn, en= *r, n= *s, el= *rs, num, *k, *dadd, m= *max;
-     long *d01;
+{    int i, j, h, mm, nn, en= *r, n= *s, el= *rs, num, *k, *dadd, m= *max;
+     int *d01;
      double u, *o, *w, *wadd, *zadd, *w01, *z01, *w2, a= *err;
      double ma(); 
      void wur();   
 
-      k=(void *)malloc((el+1)*sizeof(long));
+      k=(void *)malloc((el+1)*sizeof(int));
       o=(void *)malloc((n+1)*sizeof(double));
       w=(void *)malloc((n+1)*sizeof(double));
       wadd=(void *)malloc((n+el+1)*sizeof(double));
       zadd=(void *)malloc((n+el+1)*sizeof(double));
-      dadd=(void *)malloc((n+el+1)*sizeof(long));
+      dadd=(void *)malloc((n+el+1)*sizeof(int));
 
       for(i=0;i<n; i++) { 
            w[i]=1.0;
@@ -101,7 +100,7 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
       
       w01=(void *)malloc((mm-el+1)*sizeof(double));
       z01=(void *)malloc((mm-el+1)*sizeof(double));
-      d01=(void *)malloc((mm-el+1)*sizeof(long));
+      d01=(void *)malloc((mm-el+1)*sizeof(int));
       w2=(void *)malloc((el+1)*sizeof(double));
 
 

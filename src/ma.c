@@ -6,9 +6,9 @@ where s and t are arrays of length n. */
 
 double ma(t, s, n)
 double t[], s[];     /*  *t, *s ? */ 
-long n;              /* should that be *n ?  or long *n ? */ 
+int n;              /* should that be *n ?  or long *n ? */ 
 {
-    long i;
+    int i;
     double a=0.0, b;
 
     for(i=0; i<n; i++) 

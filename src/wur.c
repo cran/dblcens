@@ -22,10 +22,10 @@ copyright GPL2. Please send comments, bug
 
 void wur(d, wt, sur, jum, n)    
 double wt[], sur[], jum[];   /*  *wt, *sur, *jum[]? */
-long  d[], n;            /* should that be *n ? long *n ?  d[] ? */ 
+int d[], n;            /* should that be *n ? int *n ?  d[] ? */ 
                        /* since this is not directly interface with S */
                        /* may be we do not need them to be pointers   */
-{  long i;
+{  int i;
    double a=0.0;
 
    for(i=0; i<n; i++)

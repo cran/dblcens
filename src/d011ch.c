@@ -8,6 +8,7 @@
   First ver.   : June 9, 1993
   Revisions    : 6/27/1999, 2/2002. This C program should be used with
                  the Splus program d011ch.s. 
+                 2/2005 changed type long to int to work better in AMD64.
 **************************************************************************/
 
 #include <math.h>
@@ -15,8 +16,8 @@
 
 void d011ch(z, d, dup, sur, jum, max, err, r, s, rs, zext, dext, wext,
              pK, pkonst, konstdist, konstjump, llratio)
-long *max, *r, *s, *rs;
-long d[], dext[];
+int *max, *r, *s, *rs;
+int d[], dext[];
 double *err, *pK, *pkonst, *llratio;
 double z[], sur[], jum[], zext[], wext[];
 double konstdist[], konstjump[];
@@ -33,8 +34,8 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
    zext, dext, wext are for output extended data, they have length s+rs  */
 
 {
-  long i, j, h, mm, nn, en= *r, n= *s, el= *rs, num, *k, *dadd, m= *max;
-  long *d01;
+  int i, j, h, mm, nn, en= *r, n= *s, el= *rs, num, *k, *dadd, m= *max;
+  int *d01;
   double u, *o, *w, *wadd, *zadd, *w01, *z01, *w2, a= *err;
 
   double ma(); 
@@ -44,19 +45,19 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
   double loglik1(), loglik2(); 
 
   double *jadd, *fadd, *sadd;
-  long count=0, size1=0, cn1=0,cn2=0;
+  int count=0, size1=0, cn1=0,cn2=0;
   double *extdist1, *extdist2;
   double K, konst, logliksc, loglikct, loglikratio;
 
   K = *pK;
   konst = *pkonst;
 
-  k=(void *)malloc((el+1)*sizeof(long));
+  k=(void *)malloc((el+1)*sizeof(int));
   o=(void *)malloc((n+1)*sizeof(double));
   w=(void *)malloc((n+1)*sizeof(double));
   wadd=(void *)malloc((n+el+1)*sizeof(double));
   zadd=(void *)malloc((n+el+1)*sizeof(double));
-  dadd=(void *)malloc((n+el+1)*sizeof(long));
+  dadd=(void *)malloc((n+el+1)*sizeof(int));
 
   /* This block is to compute w. After that, length(w) should =
      length(z).
@@ -125,7 +126,7 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
       
   w01=(void *)malloc((mm-el+1)*sizeof(double));
   z01=(void *)malloc((mm-el+1)*sizeof(double));
-  d01=(void *)malloc((mm-el+1)*sizeof(long));
+  d01=(void *)malloc((mm-el+1)*sizeof(int));
   w2=(void *)malloc((el+1)*sizeof(double));
 
   /* This block is to seperate data according to d vlaue:
@@ -349,7 +350,7 @@ copyright:The software is Gnu, means it can be freely used and freely
 /* self-consistency distribution.                      */
       
 double loglik1(d,sur,jum,n)
-long d[],n;
+int d[],n;
 double sur[], jum[];
 {
   double *sur2, *sur0, *sur1;
@@ -425,7 +426,7 @@ double sur[], jum[];
 
 double loglik2(dist, d,jump,n)
 double dist[], jump[];
-long d[],n;
+int d[],n;
 {
   double *sur1, *sur0, *sur2;
   double sum1, sum0, sum2; 
@@ -518,10 +519,10 @@ copyright:The software is Gnu, means it can be freely used and freely
 
 void selfafterT(z,d,wt,sur, extdist1, extdist2, K,konst,n,count,m,size1, a)
 double z[], wt[], sur[], extdist1[],extdist2[], konst, K, a;
-long d[], n, count,m,size1;
+int d[], n, count,m,size1;
 {
   double value;
-  long count2, size2, w2, *newd;
+  int count2, size2, w2, *newd;
   double *newtime, *theta, *Ftheta;
   double *newdist, *newFtheta, *neww;
   int num, q;
@@ -541,7 +542,7 @@ long d[], n, count,m,size1;
       count2++;
   } 
   newtime=(void *)malloc((count2+1)*sizeof(double));
-  newd=(void *)malloc((count2+1)*sizeof(long)); 
+  newd=(void *)malloc((count2+1)*sizeof(int)); 
   newdist=(void *)malloc((count2+1)*sizeof(double));
   neww=(void *)malloc((count2+1)*sizeof(double));
 
@@ -684,10 +685,10 @@ copyright:The software is Gnu, means it can be freely used and freely
 
 void selfbeforeT(z,d,wt,dist, extdist1, K,konst, n, count, m, size1,a)
 double z[], wt[], dist[], extdist1[], konst, K, a;
-long d[],n, count,m, size1;
+int d[],n, count,m, size1;
 {
   double value, ans;
-  long  *newd;
+  int  *newd;
   double *newtime, *theta, *Ftheta;
   double *newdist ,*newFtheta, *extFtheta;
   int num=1, q=0, count1=0;
@@ -699,7 +700,7 @@ long d[],n, count,m, size1;
   value=dist[count-1];
  
   newtime=(void *)malloc((count+1)*sizeof(double));
-  newd=(void *)malloc((count+1)*sizeof(long)); 
+  newd=(void *)malloc((count+1)*sizeof(int)); 
   newdist=(void *)malloc((count+1)*sizeof(double)); 
 
   for(i=0;i<count;i++){
