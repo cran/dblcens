@@ -166,7 +166,8 @@ d011 <- function(z, d, identical = rep(0, length(z)),
                 as.integer(length(sortd[sortd>1.5])),
                 as.double(zext),
                 as.integer(dext), 
-                as.double(wext))
+                as.double(wext),
+                PACKAGE = "dblcens")
 
        status <- tes[[2]][1:tes[[9]]]
        surv <- tes[[4]][1:tes[[9]]]

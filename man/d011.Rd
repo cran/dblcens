@@ -4,15 +4,16 @@
 \description{
     \code{d011} computes the NPMLE of CDF from doubly censored data
          via EM algorithm starting from an initial estimator that
-         have jumps at uncensored points. The initial estimator also
-     have jump at (mid-point of) survival times with censoring indicator 
+         have jumps at (1) uncensored points; (2) (mid-point of) 
+         consecutive survival times with censoring indicator 
          pattern of (0,2), (see below for definition)
 
   When there are ties, the left (right)
  censored points are treated as happened before (after), to break tie.
- Also the last right censored observation and first left censored
+ Also when the last obs. happens to be right censored observation and 
+ when the first obs. happens to be left censored
  observations are changed to uncensored, in order to obtain
- a proper distribution as estimator. (though this can be modified
+ a proper distribution as the CDF estimator. (though this can be modified
  easily as they are written in R language).
 
 It also computes the NPMLE of the two censoring distributions.
@@ -27,14 +28,14 @@ three influence functions.
     \item{z}{a vector of length n denoting observed times, (ties permitted)}
     \item{d}{a vector of length n that contains censoring indicator:
             d= 2 or 1 or 0, (according to z being left, not, right censored)}
-    \item{identical}{optional. a vector of length n that has values 
+    \item{identical}{optional. A vector of length n that has values 
                either 0 or 1.
              identical[i]=1 means even if $(z[i],d[i])$ is identical with
               $(z[j],d[j])$, for some $j \not= i$, they still stay as 2 
           observations,
  (not 1 obs. with weight 2, which only happen if identical[i]=0
  and identical[j] =0). One reason for this is because they may have
- different covariates not shown here. This has more flexibility
+ different covariates not shown here. This adds more flexibility
  for regression applications. 
  Default value is  identical = 0, (i.e. collapse
  if identical observations). }
@@ -86,13 +87,13 @@ Ann. Statist. 18, 390-405.
 
 Chen, K. and Zhou, M. (2000). 
 Nonparametric Hypothesis Testing and
-Confidence Intervals with Doubly Censored Data. Tech Report,
-Univ. of Kentucky.
+Confidence Intervals with Doubly Censored Data. Tech. Report,
+Univ. of Kentucky. See also  Lifetime Data Analysis, {\bf 9}, (2003).
 }
 \examples{
 d011(z=c(1,2,3,4,5), d=c(1,0,2,2,1))
 #
-# you should get something like (and more)
+# you should get something like below (and more)
 #
 #       $time:
 #       [1] 1.0 2.0 2.5 5.0    (notice the times, (3,4), corresponding

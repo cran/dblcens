@@ -149,7 +149,8 @@ d011ch <- function(z, d, K, konst,
                           as.double(konst),
                           as.double(konstdist),
                           as.double(konstjump),
-                          as.double(llratio))
+                          as.double(llratio),
+                          PACKAGE = "dblcens")
 
                time <- tes[[1]][1:tes[[9]]]
                status <- tes[[2]][1:tes[[9]]]

@@ -3,10 +3,10 @@
 \title{Compute NPMLE of CDF from doubly censored data, with a constraint}
 \description{
     \code{d011ch} computes the NPMLE of CDF, with and without a 
-              constraint, from doubly censored data.
-         It uses EM algorithm starting from an initial estimator that
+         constraint, from doubly censored data.
+         It uses EM algorithm starting from an initial CDF estimator that
          have jumps at uncensored points as well as the mid point of those
- censoring times that has pattern of (0,2), (see below for definition 
+ censoring times that have pattern of (0,2), (see below for definition 
  and example.)
 
 When there are ties, the left (right)
@@ -19,7 +19,7 @@ When there are ties, the left (right)
 It also computes the -2 log likelihood ratio based on the empirical
 likelihood 
 for testing the constraint via empirical likelihood theorem, i.e.
-under Ho it should be chi-square with df=1.
+under Ho it should be distributed as chi-square with df=1.
 }
 \usage{
  d011ch(z, d, K, konst, identical=rep(0,length(z), maxiter=49, error=0.00001)
@@ -81,10 +81,13 @@ Ann. Statist. 25, 1471-1509.
 Chen, K. and Zhou, M. (2000). 
 Nonparametric Hypothesis Testing and
 Confidence Intervals with Doubly Censored Data. Tech Report, 
-Univ. of Kentucky.
+Univ. of Kentucky. This paper appeared in: 
+Lifetime Data Analysis (2003). {\bf 9}
 }
 \examples{
 d011ch(z=c(1,2,3,4,5), d=c(1,0,2,2,1), K=3.5, konst=0.6)
+#
+#  Here we are testing Ho: F(3.5) = 0.6 with a two-sided alternative
 #
 # you should get something like
 #
@@ -129,6 +132,8 @@ d011ch(z=c(1,2,3,4,5), d=c(1,0,2,2,1), K=3.5, konst=0.6)
 #
 #       $maxiter
 #       [1] 33
+#
+#  The Wilks statistic is only 0.05679897, there is no evidence agaist Ho
 }
 \keyword{survival}
 \keyword{nonparametric}
