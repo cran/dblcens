@@ -21,8 +21,8 @@ There is an option that you may also try to compute the
 three influence functions.
 }
 \usage{
- d011(z,d,identical=rep(0,length(z)),
-         maxiter=49,error=0.00001,influence.fun=FALSE)
+d011(z, d, identical = rep(0, length(z)),
+         maxiter = 49, error = 0.00001, influence.fun = FALSE)
 }
 \arguments{
     \item{z}{a vector of length n denoting observed times, (ties permitted)}

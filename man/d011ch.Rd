@@ -2,18 +2,22 @@
 \alias{d011ch}
 \title{Compute NPMLE of CDF from doubly censored data, with a constraint}
 \description{
-    \code{d011ch} computes the NPMLE of CDF, with and without a 
-         constraint, from doubly censored data. 
+    \code{d011ch} computes the NPMLE of CDF, with and without a
+         constraint, from doubly censored data.
          It also computes the -2 log empirical likelihood ratio 
          for testing the constraint via empirical likelihood theorem, i.e.
          under Ho it should be distributed as chi-square with df=1.
 
         It uses EM algorithm starting from an initial CDF estimator that
-        have jumps at uncensored points as well as the mid point of those
- censoring times that have pattern of (0,2), (see below for definition 
+        have jumps at uncensored points as well as the mid-point of those
+ censoring times that have a pattern of (0,2), (see below for definition 
  and example.)
 
-When there are ties, the left (right)
+The constraint on the CDF are given in the form F(T) = p where you
+specify the time T and probability p.
+
+ When there are ties among censored and uncensored observations, the 
+ left (right)
  censored points are treated as happened before (after), to break tie.
  Also the last right censored observation and first left censored
  observations are changed to uncensored, in order to obtain
@@ -22,7 +26,8 @@ When there are ties, the left (right)
 
 }
 \usage{
- d011ch(z, d, K, konst, identical=rep(0,length(z), maxiter=49, error=0.00001)
+d011ch(z, d, K, konst, 
+     identical = rep(0, length(z)), maxiter = 49, error = 0.00001)
 }
 \arguments{
     \item{z}{a vector of length n denoting observed times, (ties permitted)}
@@ -36,10 +41,10 @@ When there are ties, the left (right)
               $(z[j],d[j])$, for some $j \not= i$, they still stay as 2 
            observations,
  not 1 obs. with weight 2, which only happen if identical[i]=0
- and identical[j] =0. One reason for this is because they may have
+ and identical[j] =0. One reason to do this is because they may have
  different covariates not shown here. This flexibility may be useful
  for regression applications. Default value is  identical = 0. }
-    \item{maxiter}{optional integer value. default to 49}
+    \item{maxiter}{optional integer value. Default to 49}
     \item{error}{optional. Default to 0.00001}
 }
 \value{ 
