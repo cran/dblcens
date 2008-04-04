@@ -1,6 +1,6 @@
 Package: dblcens
 Title: Compute the NPMLE of distribution from doubly censored data
-Version: 1.1.3
+Version: 1.1.4
 Author: Mai Zhou, Li Lee, Kun Chen.
 Description: Use EM algorithm to compute the NPMLE of CDF and also the two
              censoring distributions. For doubly censored data 
@@ -10,7 +10,8 @@ Description: Use EM algorithm to compute the NPMLE of CDF and also the two
              This can be used to test the hypothesis about the constraint
              and find confidence intervals for F(T) via empirical likelihood 
              ratio theorem.  
-             Influence function of hat F may also be calculated (but slow).
+             Influence function of hat F may also be calculated 
+             (but may be slow).
 Maintainer: Mai Zhou <mai@ms.uky.edu>
-License: GPL2
-Packaged: Fri Aug  5 17:54:40 2005; mai
+License: GPL (>= 2)
+Packaged: Fri Apr  4 22:40:44 2008; hornik

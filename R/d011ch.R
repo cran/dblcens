@@ -97,7 +97,7 @@ d011ch <- function(z, d, K, konst,
                if(K < min(sortz))
                {
                   konstjump <- rep((1-konst)/nn,nn)
-                  konstdist <- cumsum(c(knost,konstjump))  
+                  konstdist <- cumsum(c(konst,konstjump))  #changed 4/2008  
                   konstdist <- konstdist[2:nn]
                }
                else if(K > max(sortz))
