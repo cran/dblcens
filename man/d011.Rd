@@ -30,8 +30,8 @@ d011(z, d, identical = rep(0, length(z)),
             d= 2 or 1 or 0, (according to z being left, not, right censored)}
     \item{identical}{optional. A vector of length n that has values 
                either 0 or 1.
-             identical[i]=1 means even if $(z[i],d[i])$ is identical with
-              $(z[j],d[j])$, for some $j \not= i$, they still stay as 2 
+             identical[i]=1 means: even if (z[i],d[i]) is identical to
+              (z[j],d[j]), for some \eqn{j \not= i}, they still stay as 2 
           observations,
  (not 1 obs. with weight 2, which only happen if identical[i]=0
  and identical[j] =0). One reason for this is because they may have
@@ -85,10 +85,10 @@ arbitrarily grouped, censored and truncated data. JRSS B 290-295.
 Chang, M. N. (1990). Weak convergence in doubly censored data.
 Ann. Statist. 18, 390-405.
 
-Chen, K. and Zhou, M. (2000). 
+Chen, K. and Zhou, M. (2003). 
 Nonparametric Hypothesis Testing and
-Confidence Intervals with Doubly Censored Data. Tech. Report,
-Univ. of Kentucky. See also  Lifetime Data Analysis, {\bf 9}, (2003).
+Confidence Intervals with Doubly Censored Data.
+Lifetime Data Analysis,  9, 71-91. 
 }
 \examples{
 d011(z=c(1,2,3,4,5), d=c(1,0,2,2,1))

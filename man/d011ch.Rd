@@ -1,11 +1,12 @@
 \name{d011ch}
 \alias{d011ch}
-\title{Compute NPMLE of CDF from doubly censored data, with a constraint}
+\title{Compute NPMLE of CDF from doubly censored data, with and without
+       a constraint, plus an empirical likelihood ratio}
 \description{
     \code{d011ch} computes the NPMLE of CDF, with and without a
          constraint, from doubly censored data.
          It also computes the -2 log empirical likelihood ratio 
-         for testing the constraint via empirical likelihood theorem, i.e.
+         for testing the given constraint via empirical likelihood theorem, i.e.
          under Ho it should be distributed as chi-square with df=1.
 
         It uses EM algorithm starting from an initial CDF estimator that
@@ -13,8 +14,8 @@
  censoring times that have a pattern of (0,2), (see below for definition 
  and example.)
 
-The constraint on the CDF are given in the form F(T) = p where you
-specify the time T and probability p.
+The constraint on the CDF are given in the form F(K) = konst.  where you
+specify the time K and probability `konst'.
 
  When there are ties among censored and uncensored observations, the 
  left (right)
@@ -37,10 +38,10 @@ d011ch(z, d, K, konst,
     \item{konst}{the constraint value, i.e. F(K)=konst.}
     \item{identical}{optional. a vector of length n that has values 
                either 0 or 1.
-             identical[i]=1 means even if $(z[i],d[i])$ is identical with
-              $(z[j],d[j])$, for some $j \not= i$, they still stay as 2 
+             identical[i]=1 means even if (z[i],d[i]) is identical with
+              (z[j],d[j]), for some \eqn{j \not= i}, they still stay as 2 
            observations,
- not 1 obs. with weight 2, which only happen if identical[i]=0
+ not 1 observation with weight 2, which only happen if identical[i]=0
  and identical[j] =0. One reason to do this is because they may have
  different covariates not shown here. This flexibility may be useful
  for regression applications. Default value is  identical = 0. }
@@ -83,11 +84,10 @@ Murphy, S. and Van der Varrt. (1997).
 Semiparametric Likelihood Ratio Inference.
 Ann. Statist. 25, 1471-1509.
 
-Chen, K. and Zhou, M. (2000). 
+Chen, K. and Zhou, M. (2003). 
 Nonparametric Hypothesis Testing and
-Confidence Intervals with Doubly Censored Data. Tech Report, 
-Univ. of Kentucky. This paper appeared in: 
-Lifetime Data Analysis (2003). {\bf 9}
+Confidence Intervals with Doubly Censored Data. 
+Lifetime Data Analysis. 9, 71-91.
 }
 \examples{
 d011ch(z=c(1,2,3,4,5), d=c(1,0,2,2,1), K=3.5, konst=0.6)
@@ -137,7 +137,7 @@ d011ch(z=c(1,2,3,4,5), d=c(1,0,2,2,1), K=3.5, konst=0.6)
 #       $maxiter
 #       [1] 33
 #
-#  The Wilks statistic is only 0.05679897, there is no evidence agaist Ho
+#  The Wilks statistic is 0.05679897, there is no evidence against Ho: F(3.5)=0.6
 }
 \keyword{survival}
 \keyword{nonparametric}

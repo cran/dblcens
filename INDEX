@@ -1,3 +1,7 @@
+IVaids                  Data: AIDS patient among IV drug user
+LUPE1                   Compute self-consistant estimator of CDF from
+                        doubly censored data
 d011                    Compute NPMLE of CDF from doubly censored data
 d011ch                  Compute NPMLE of CDF from doubly censored data,
-                        with a constraint
+                        with and without a constraint, plus an
+                        empirical likelihood ratio
