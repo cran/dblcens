@@ -1,0 +1,16 @@
+795f17bf44e4baeb57fd4103244c8314 *DESCRIPTION
+8f226bdb30584e12e6d9c6af63987af0 *INDEX
+9fdfeb11f7ddba6f3aab9aaa6b1ac5dd *NAMESPACE
+a4b82f7317f409a74a2f65d31b016844 *R/Wdataclean2.R
+b0098a7a339d3fe877586ad891227e27 *R/d011.R
+d85985619c81e7f605d6fd5a628e4f51 *R/d011ch.R
+bd6df104306c71cc159c1a28a85a5a2b *R/zzz.R
+1a7c933e5e3f4baa47faa803b1e7b241 *data/IVaids.rda
+21559e7e217b9088d9e9290aaf272e66 *man/IVaids.Rd
+4c962ff1f1f6139dc352dae1fa9a7ad3 *man/d011.Rd
+6db5326f1c88c61c3d683e1f70d17616 *man/d011ch.Rd
+8e88c0ea8c22cbc189001c1086348313 *man/dblcens-internal.Rd
+de4ed0a30adba08833f70b9c896d83ac *src/d011ch.c
+4b88f82d84371ae39f2c3c600d36bdb8 *src/ma.c
+74a609d6c704604ac4a8af0080d66e99 *src/urnew010.c
+fd8b8f8283f510401e50be724ee9b456 *src/wur.c
