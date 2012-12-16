@@ -17,14 +17,9 @@
 The constraint on the CDF are given in the form F(K) = konst.  where you
 specify the time K and probability `konst'.
 
- When there are ties among censored and uncensored observations, the 
- left (right)
- censored points are treated as happened before (after), to break tie.
- Also the last right censored observation and first left censored
- observations are changed to uncensored, in order to obtain
- a proper distribution as estimator. (though this can be modified
- easily as they are written in R language).
-
+ When there are ties among censored and uncensored observations, the left (right)
+ censored points are treated as happened slightly before (after), to break tie.
+ Also the last right censored observation and first left censored observation are changed to uncensored, in order to obtain a proper distribution as estimator. (though this can be modified easily as they are written in R language).
 }
 \usage{
 d011ch(z, d, K, konst, 

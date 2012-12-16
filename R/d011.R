@@ -1,7 +1,7 @@
 ####################################################################
 # d011      compute the NPMLE of distribution function from doubly #
 #           censored data. Now returns censoring distribution too. #
-#           There is an option to return influence functions.      #
+#           There is an option to return influence functions       #
 #           (this may take long time and large memory).            #
 # copyright The software is GNU GPL2 copyrighted                   #
 #           Please send comments, bug report etc. to               # 
@@ -279,14 +279,14 @@ d011 <- function(z, d, identical = rep(0, length(z)),
 #
 # Now compute the var of NPMLE at t= the nodes.
 #
-    sum1 <- apply(IC1tu2,1,sum)/N
-    sum2 <- apply((IC1tu2)^2,1,sum)/N           # do I need to add weight?
+    sum1 <- rowSums(IC1tu2)/N       ##  sum1 <- apply(IC1tu2,1,sum)/N
+    sum2 <- rowSums((IC1tu2)^2)/N   ## apply((IC1tu2)^2,1,sum)/N   # do I need to add weight?
 
-    sum3 <- apply(as.matrix(IC2tu[,statusofnode == 0]),1,sum)/N
-    sum4 <- apply(as.matrix(IC2tu[,statusofnode == 0])^2,1,sum)/N
+    sum3 <- rowSums(as.matrix(IC2tu[,statusofnode == 0]))  ## apply(as.matrix(IC2tu[,statusofnode == 0]),1,sum)/N
+    sum4 <- rowSums(as.matrix(IC2tu[,statusofnode == 0])^2)/N
 
-    sum5 <- apply(as.matrix(IC3tu[,statusofnode == 2]),1,sum)/N 
-    sum6 <- apply(as.matrix(IC3tu[,statusofnode == 2])^2,1,sum)/N 
+    sum5 <- rowSums(as.matrix(IC3tu[,statusofnode == 2]))/N 
+    sum6 <- rowSums(as.matrix(IC3tu[,statusofnode == 2])^2)/N 
 
    var <- sum2 + sum4 + sum6 - (sum1 + sum3 + sum5)^2
 

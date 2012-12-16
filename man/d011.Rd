@@ -6,19 +6,19 @@
          via EM algorithm starting from an initial estimator that
          have jumps at (1) uncensored points; (2) (mid-point of) 
          consecutive survival times with censoring indicator 
-         pattern of (0,2), (see below for definition)
+         pattern of (0,2), (see below for definition).
 
   When there are ties, the left (right)
- censored points are treated as happened before (after), to break tie.
- Also when the last obs. happens to be right censored observation and 
- when the first obs. happens to be left censored
- observations are changed to uncensored, in order to obtain
+ censored points are treated as happened slightly before (after), to break tie.
+ Also when the last observation happens to be right censored and/or 
+ when the first observation happens to be left censored, they are changed 
+ to uncensored. This is to ensure we obtain
  a proper distribution as the CDF estimator. (though this can be modified
  easily as they are written in R language).
 
 It also computes the NPMLE of the two censoring distributions.
 There is an option that you may also try to compute the 
-three influence functions.
+three influence functions (but could slow and memory hungry).
 }
 \usage{
 d011(z, d, identical = rep(0, length(z)),
@@ -47,7 +47,7 @@ d011(z, d, identical = rep(0, length(z)),
  >500 censored times). }
 }
 \value{ 
-    a list contain the NPMLE of CDF and other informations.
+    a list contain the NPMLE of CDF and other information.
 \item{time}{Times of input z, with time corresponding to status=2 removed.}
 \item{status}{Censoring status of the above times. Status = -1 means this is
 an added time because of the censoring pattern (0,2).}
