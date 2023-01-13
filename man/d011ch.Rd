@@ -17,9 +17,7 @@
 The constraint on the CDF are given in the form F(K) = konst.  where you
 specify the time K and probability `konst'.
 
- When there are ties among censored and uncensored observations, the left (right)
- censored points are treated as happened slightly before (after), to break tie.
- Also the last right censored observation and first left censored observation are changed to uncensored, in order to obtain a proper distribution as estimator. (though this can be modified easily as they are written in R language).
+When there are ties among censored and uncensored observations, the left (right) censored points are treated as happened slightly before (after), to break tie. Also the last right censored observation and first left censored observation are changed to uncensored, in order to obtain a proper distribution as estimator (though this can be modified easily as they are written in R language).
 }
 \usage{
 d011ch(z, d, K, konst, 
@@ -41,10 +39,20 @@ d011ch(z, d, K, konst,
  different covariates not shown here. This flexibility may be useful
  for regression applications. Default value is  identical = 0. }
     \item{maxiter}{optional integer value. Default to 49}
-    \item{error}{optional. Default to 0.00001}
+    \item{error}{optional. Default to 0.00001. maxiter and error are used to control the time of computing.}
+}
+\details{
+A true NPMLE may have probability mass inside an interval when two consecutive time
+having censoring pattern d= (0, 2). See the help file of d011() for more details.
+
+The definition of the double censoring is same as the Example 6.4 of Owen's 2001 book 
+(except he uses d=0, 1, -1. we use d=0, 1 and 2).
+Our empirical likelihood function for the doubly censored data is also the same with the 
+definition L(F) given on the middle of p. 148 of the book. In our natation it is
+\deqn{EL_c(F) = \prod_{i=1}^n [\Delta F (z_i) ]^{d_i=1} [1-F(z_i)]^{d_i=0}[F(z_i)]^{d_i=2}.}
 }
 \value{ 
-    a list contain the NPMLE of CDF with and without the constraint,
+ a list contain the NPMLE of CDF with and without the constraint,
  -2loglik ratio and other informations.
 \item{time}{ survival times. Those corresponding to d=2 are removed.
 Those corresponding to (0,2) censoring pattern are added, at mid-point.}
@@ -69,7 +77,7 @@ before.}
          The constrained NPMLE usually took less iterations to converge.}
 }
 \author{Kun Chen, 
-Mai Zhou \email{mai@ms.uky.edu} }
+Mai Zhou}
 \references{
 Chang, M. N. and Yang, G. L. (1987). Strong consistency
 of a nonparametric estimator of the survival function with doubly
@@ -83,6 +91,9 @@ Chen, K. and Zhou, M. (2003).
 Nonparametric Hypothesis Testing and
 Confidence Intervals with Doubly Censored Data. 
 Lifetime Data Analysis. 9, 71-91.
+
+Owen, A. (2001). Empirical Likelihood.
+Chapman and Hall CRC press, Boca Raton. 
 }
 \examples{
 d011ch(z=c(1,2,3,4,5), d=c(1,0,2,2,1), K=3.5, konst=0.6)

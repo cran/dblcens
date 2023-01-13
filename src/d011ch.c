@@ -13,36 +13,30 @@
 
 #include <math.h>
 #include <stdlib.h>
+#include "utils.h"
 
-void d011ch(z, d, dup, sur, jum, max, err, r, s, rs, zext, dext, wext,
-             pK, pkonst, konstdist, konstjump, llratio)
-int *max, *r, *s, *rs;
-int d[], dext[];
-double *err, *pK, *pkonst, *llratio;
-double z[], sur[], jum[], zext[], wext[];
-double konstdist[], konstjump[];
-char *dup[];        /* I used char *dup and char dup[], they do not work! */ 
-
-
-/* z, d, max and err are z012, d012, maxiter and error in Splus.
-   dup, sur, jum  are as in Splus.
-   Everything should be ordered according to (z,-d) before calling this
-   function.
-   r is the length of dup which >= length of z or d.
-   s is the length of d. (and z)
-   rs is length of d[d=2] 
-   zext, dext, wext are for output extended data, they have length s+rs  */
-
-{
+void d011ch(
+  double * z, 
+  int * d, 
+  int * dup, 
+  double *sur, 
+  double *jum, 
+  int * max, 
+  double * err, 
+  int * r, 
+  int * s, 
+  int * rs, 
+  double *zext, 
+  int * dext, 
+  double *wext,
+  double * pK, 
+  double * pkonst, 
+  double *konstdist, 
+  double *konstjump, 
+  double * llratio){
   int i, j, h, mm, nn, en= *r, n= *s, el= *rs, num, *k, *dadd, m= *max;
   int *d01;
   double u, *o, *w, *wadd, *zadd, *w01, *z01, *w2, a= *err;
-
-  double ma(); 
-  void wur(); 
-
-  void selfbeforeT(), selfafterT();
-  double loglik1(), loglik2(); 
 
   double *jadd, *fadd, *sadd;
   int count=0, size1=0, cn1=0,cn2=0;
@@ -52,12 +46,12 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
   K = *pK;
   konst = *pkonst;
 
-  k=(void *)malloc((el+1)*sizeof(int));
-  o=(void *)malloc((n+1)*sizeof(double));
-  w=(void *)malloc((n+1)*sizeof(double));
-  wadd=(void *)malloc((n+el+1)*sizeof(double));
-  zadd=(void *)malloc((n+el+1)*sizeof(double));
-  dadd=(void *)malloc((n+el+1)*sizeof(int));
+  k    = INT_MALLOC_(el+1);
+  o    = DOUBLE_MALLOC_(n+1);
+  w    = DOUBLE_MALLOC_(n+1);
+  wadd = DOUBLE_MALLOC_(n+el+1);
+  zadd = DOUBLE_MALLOC_(n+el+1);
+  dadd = INT_MALLOC_(n+el+1);
 
   /* This block is to compute w. After that, length(w) should =
      length(z).
@@ -72,7 +66,7 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
   j=0;
   for(i=1; i<en; i++)
   {
-    if(*dup[i] == 'T')
+    if(dup[i] == 1)
       w[j]+=1;
     else
       ++j; 
@@ -124,10 +118,10 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
   k[i]= '\0';
  
       
-  w01=(void *)malloc((mm-el+1)*sizeof(double));
-  z01=(void *)malloc((mm-el+1)*sizeof(double));
-  d01=(void *)malloc((mm-el+1)*sizeof(int));
-  w2=(void *)malloc((el+1)*sizeof(double));
+  w01 = DOUBLE_MALLOC_(mm-el+1);
+  z01 = DOUBLE_MALLOC_(mm-el+1);
+  d01 = INT_MALLOC_(mm-el+1);
+  w2  = DOUBLE_MALLOC_(el+1);
 
   /* This block is to seperate data according to d vlaue:
      d=0, 1, -1 and d=2. The length of z01 is nn 
@@ -193,9 +187,9 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
     *max=num;
     *s=nn;
     
-    jadd=(void *)malloc((mm+1)*sizeof(double));
-    fadd=(void *)malloc((mm+1)*sizeof(double));
-    sadd=(void *)malloc((mm+1)*sizeof(double));
+    jadd = DOUBLE_MALLOC_(mm+1);
+    fadd = DOUBLE_MALLOC_(mm+1);
+    sadd = DOUBLE_MALLOC_(mm+1);
 
     /* This block gets extended time, status, weights and jumps */ 
     j=0; 
@@ -240,8 +234,8 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
         size1++;
     }                                
 
-    extdist1 = (void *)malloc((count+1)*sizeof(double));
-    extdist2 = (void *)malloc((mm-count+1)*sizeof(double));
+    extdist1 = DOUBLE_MALLOC_(count+1);
+    extdist2 = DOUBLE_MALLOC_(mm-count+1);
    
     /* Compute the modify self-consistency distribution before 
        and after constrained time T.  */
@@ -335,24 +329,8 @@ char *dup[];        /* I used char *dup and char dup[], they do not work! */
     free(o);
     free(w);
 }
-     
-/*****************************************************************
-copyright:The software is Gnu, means it can be freely used and freely 
-          distributed for non-commercial purposes. Please send comments,
-          bug report etc. to mai@ms.uky.edu  or
- 
-            Mai Zhou
-            Department of Statistics
-            University of Kentucky
-            Lexington, KY 40506-0027
-*******************************************************************/
-/* This function computes the loglikihood for general  */
-/* self-consistency distribution.                      */
-      
-double loglik1(d,sur,jum,n)
-int d[],n;
-double sur[], jum[];
-{
+
+double loglik1(int * d, double * sur, double * jum, int n){
   double *sur2, *sur0, *sur1;
   double sum1, sum2, sum0;
   double logliksc;
@@ -370,9 +348,9 @@ double sur[], jum[];
       m++;
   }
 
-  sur2=(void *)malloc((k+1)*sizeof(double));
-  sur0=(void *)malloc((l+1)*sizeof(double));
-  sur1=(void *)malloc((m+1)*sizeof(double));
+  sur2 = DOUBLE_MALLOC_(k+1);
+  sur0 = DOUBLE_MALLOC_(l+1);
+  sur1 = DOUBLE_MALLOC_(m+1);
 
   j=0; 
   for(i=0;i<n;i++)
@@ -423,11 +401,7 @@ double sur[], jum[];
 
 /* This function computes loglikelihood for constrained    */
 /* self-consistency distribution.                          */
-
-double loglik2(dist, d,jump,n)
-double dist[], jump[];
-int d[],n;
-{
+double loglik2(double * dist, int * d, double * jump, int n){
   double *sur1, *sur0, *sur2;
   double sum1, sum0, sum2; 
   double loglikct;  
@@ -447,9 +421,9 @@ int d[],n;
     if(d[i]==1)
       m++;
   }
-  sur2=(void *)malloc((k+1)*sizeof(double));
-  sur0=(void *)malloc((l+1)*sizeof(double));
-  sur1=(void *)malloc((m+1)*sizeof(double));
+  sur2 = DOUBLE_MALLOC_(k+1);
+  sur0 = DOUBLE_MALLOC_(l+1);
+  sur1 = DOUBLE_MALLOC_(m+1);
 
   j=0; 
   for(i=0;i<n;i++)
@@ -517,9 +491,10 @@ copyright:The software is Gnu, means it can be freely used and freely
 /* written by Kun Chen            */
 /* depend on ma()                 */
 
-void selfafterT(z,d,wt,sur, extdist1, extdist2, K,konst,n,count,m,size1, a)
-double z[], wt[], sur[], extdist1[],extdist2[], konst, K, a;
-int d[], n, count,m,size1;
+void selfafterT(
+  double * z, int * d, double *  wt, double * sur, double * extdist1, double * extdist2, 
+  double K, double konst, int n,
+  int count, int m, int size1, double a)
 {
   double value;
   int count2, size2, w2, *newd;
@@ -528,7 +503,6 @@ int d[], n, count,m,size1;
   int num, q;
   double sum1, sum2, sum3, sum4;
   int i, j, h, l, k;
-  double ma();
 
   count2 = size2 = w2 = 0;
   num = 1;
@@ -541,10 +515,10 @@ int d[], n, count,m,size1;
     if(z[i]>K)
       count2++;
   } 
-  newtime=(void *)malloc((count2+1)*sizeof(double));
-  newd=(void *)malloc((count2+1)*sizeof(int)); 
-  newdist=(void *)malloc((count2+1)*sizeof(double));
-  neww=(void *)malloc((count2+1)*sizeof(double));
+  newtime = DOUBLE_MALLOC_(count2+1);
+  newd    = INT_MALLOC_(count2+1);
+  newdist = DOUBLE_MALLOC_(count2+1);
+  neww    = DOUBLE_MALLOC_(count2+1);
 
   for(i=0;i<count2;i++){
     newtime[i]=z[count+i];
@@ -567,9 +541,9 @@ int d[], n, count,m,size1;
       size2++;
   } 
 
-  theta=(void *)malloc((size2+2)*sizeof(double));
-  Ftheta=(void *)malloc((size2+2)*sizeof(double));
-  newFtheta=(void *)malloc((size2+2)*sizeof(double)); 
+  theta     = DOUBLE_MALLOC_(size2+2);
+  Ftheta    = DOUBLE_MALLOC_(size2+2);
+  newFtheta = DOUBLE_MALLOC_(size2+2); 
 
   if(size2 == 0)
   { 
@@ -683,10 +657,14 @@ copyright:The software is Gnu, means it can be freely used and freely
 /* written by Kun Chen             */
 /* depend on ma()                  */
 
-void selfbeforeT(z,d,wt,dist, extdist1, K,konst, n, count, m, size1,a)
-double z[], wt[], dist[], extdist1[], konst, K, a;
-int d[],n, count,m, size1;
+void selfbeforeT(
+  double * z, int *d,double * wt, double * dist, double * extdist1, 
+  double K, double konst, int n, int count, int m, int size1, double a)
 {
+  /*
+  double z[], wt[], dist[], extdist1[], konst, K, a;
+  int d[],n, count,m, size1;
+  */
   double value, ans;
   int  *newd;
   double *newtime, *theta, *Ftheta;
@@ -695,14 +673,18 @@ int d[],n, count,m, size1;
   double sum1, sum2, sum3, sum4;
   double numerator, w1=0.0;
   int h, i, j, l;
-  double ma();
+  double _SK = K;
+  int _Sn = n;
+
+  _SK = _SK+1.;
+  _Sn ++;
 
   value=dist[count-1];
  
-  newtime=(void *)malloc((count+1)*sizeof(double));
-  newd=(void *)malloc((count+1)*sizeof(int)); 
-  newdist=(void *)malloc((count+1)*sizeof(double)); 
-
+  newtime = DOUBLE_MALLOC_(count+1);
+  newd    = INT_MALLOC_(count+1);
+  newdist = DOUBLE_MALLOC_(count+1);
+  
   for(i=0;i<count;i++){
     newtime[i]=z[i];
     newd[i]=d[i];
@@ -716,10 +698,11 @@ int d[],n, count,m, size1;
   newd[count]='\0';
   newdist[count]='\0';
   
-  theta=(void *)malloc((size1+1)*sizeof(double));
-  Ftheta=(void *)malloc((size1+1)*sizeof(double));
-  newFtheta=(void *)malloc((size1+1)*sizeof(double));
-  extFtheta=(void *)malloc((size1+2)*sizeof(double));
+  theta     = DOUBLE_MALLOC_(size1+1);
+  Ftheta    = DOUBLE_MALLOC_(size1+1);
+  newFtheta = DOUBLE_MALLOC_(size1+1);
+  extFtheta = DOUBLE_MALLOC_(size1+2);
+
   if(size1 == 0)
   {  
     for(i=0;i<count;i++)
@@ -865,7 +848,6 @@ int d[],n, count,m, size1;
   free(Ftheta);
   free(newFtheta);
   free(extFtheta);
-
 }
 
 /*****************************************************************

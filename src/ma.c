@@ -3,10 +3,9 @@ absolute value among the first n entries of the array s-t (both double),
 where s and t are arrays of length n. */
 
 #include <math.h>
+#include "utils.h"
 
-double ma(t, s, n)
-double t[], s[];     /*  *t, *s ? */ 
-int n;              /* should that be *n ?  or long *n ? */ 
+double ma(double * t, double * s, int n)
 {
     int i;
     double a=0.0, b;

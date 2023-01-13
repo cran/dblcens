@@ -1,5 +1,0 @@
-IVaids                  Data: AIDS patient among IV drug user
-d011                    Compute NPMLE of CDF from doubly censored data
-d011ch                  Compute NPMLE of CDF from doubly censored data,
-                        with and without a constraint, plus an
-                        empirical likelihood ratio

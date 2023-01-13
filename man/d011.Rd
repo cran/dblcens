@@ -8,21 +8,14 @@
          consecutive survival times with censoring indicator 
          pattern of (0,2), (see below for definition).
 
-  When there are ties, the left (right)
- censored points are treated as happened slightly before (after), to break tie.
- Also when the last observation happens to be right censored and/or 
- when the first observation happens to be left censored, they are changed 
- to uncensored. This is to ensure we obtain
- a proper distribution as the CDF estimator. (though this can be modified
- easily as they are written in R language).
+When there are ties, the left (right) censored points are treated as happened slightly before (after), to break tie.
+Also when the last observation happens to be right censored and/or when the first observation happens to be left censored, they are changed  to uncensored. This is to ensure we obtain a proper distribution as the CDF estimator. (though this can be modified easily as they are written in R language).
 
-It also computes the NPMLE of the two censoring distributions.
-There is an option that you may also try to compute the 
-three influence functions (but could slow and memory hungry).
+It also computes the NPMLE of the two censoring distributions. There is an option that you may also try to compute the  three influence functions (but could slow and memory hungry).
 }
 \usage{
 d011(z, d, identical = rep(0, length(z)),
-         maxiter = 49, error = 0.00001, influence.fun = FALSE)
+     maxiter = 49, error = 0.00001, influence.fun = FALSE)
 }
 \arguments{
     \item{z}{a vector of length n denoting observed times, (ties permitted)}
@@ -46,8 +39,11 @@ d011(z, d, identical = rep(0, length(z)),
  This computation can be very slow and memory intensive (for data with
  >500 censored times). }
 }
+\details{
+The true NPMLE may have probability mass inside the interval where two consecutive times z[i] < z[j], having censoring pattern of d[i]=0 and d[j]=2. As the first example below show.
+}
 \value{ 
-    a list contain the NPMLE of CDF and other information.
+a list contain the NPMLE of CDF and other information.
 \item{time}{Times of input z, with time corresponding to status=2 removed.}
 \item{status}{Censoring status of the above times. Status = -1 means this is
 an added time because of the censoring pattern (0,2).}
@@ -67,20 +63,20 @@ an added time because of the censoring pattern (0,2).}
 \item{Nodes}{Points where the influence function is computed.}
 \item{IC1tu}{Influence function value at the nodes. See Chang (1990)
 for details.}
-\item{IC1tu2}{Influence function value at other points. See Chang (1990)
+\item{IC1tu2}{Influence function values at other points. See Chang (1990)
 for details.}
 \item{IC2tu}{ditto IC1tu}
 \item{IC3tu}{ditto IC1tu}
-\item{VarFt}{Estimated variances of F(t) at the Nodes.}
+\item{VarFt}{Estimated variances of \eqn{\hat F(t)} at the Nodes.}
 }
-\author{Mai Zhou \email{mai@ms.uky.edu}, Li Lee.}
+\author{Mai Zhou, Li Lee.}
 \references{
 Chang, M. N. and Yang, G. L. (1987). Strong consistency
 of a nonparametric estimator of the survival function with doubly
 censored data. Ann. Statist. 15, 1536-1547.
 
 Turnbull (1976) The empirical distribution function with
-arbitrarily grouped, censored and truncated data. JRSS B 290-295.
+arbitrarily grouped, censored and truncated data. JRSS B, 290-295.
 
 Chang, M. N. (1990). Weak convergence in doubly censored data.
 Ann. Statist. 18, 390-405.
@@ -118,7 +114,7 @@ d011(z=c(1,2,3,4,5), d=c(1,0,2,2,1))
 #       $conv
 #       [1] 3.300000e+01  8.788214e-06  ### did 33 iterations
 #
-# BTW, the true NPMLE of surv is (1/2, 1/2, 1/3, 0) at times (1,2,2.5,5).
+# BTW, the true NPMLE of surv, i.e. 1-F(), is (1/2, 1/2, 1/3, 0) at times (1,2,2.5,5).
 ###### Example 2. 
 d011(c(1,2,3,4,5), c(1,2,1,0,1),influence.fun=TRUE)
 #     we get
@@ -145,7 +141,7 @@ d011(c(1,2,3,4,5), c(1,2,1,0,1),influence.fun=TRUE)
 #[2,]   -1 -1.0000000
 #
 #$VarFt:
-#[1] 0.24 0.24           ## est var of F(t) at t=nodes
+#[1] 0.24 0.24           ## est var of hat F(t) at t=nodes
 #######################################################
 }
 \keyword{survival}
